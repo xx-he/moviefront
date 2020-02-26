@@ -1,0 +1,73 @@
+.user_admin {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    padding-top: 20px;
+    box-sizing: border-box;
+  }
+
+  .flex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .el-row {
+    padding: 3px 0;
+    background-color: #f9fafc;
+  }
+
+  .bg-purple-dark {
+    background: #99a9bf;
+  }
+
+  .bg-purple {
+    background: #d3dce6;
+  }
+
+  .bg-purple-light {
+    background: #e5e9f2;
+  }
+
+  .grid-content {
+    border-radius: 2px;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .flex-end {
+    justify-content: flex-end;
+  }
+
+  .flex-start {
+    justify-content: flex-start;
+  }
+
+  .el-checkbox {
+    float: left;
+    margin: 0 10px;
+  }
+  .courseCol15{
+    display: flex;
+    align-items: center;
+  }
+  #identitySwitchButton{
+    text-align: center;
+    height: 100px;
+    line-height: 100px;
+    background-color: #f9fafc;
+  }
+  #youdaoUseridInput{
+    position: relative;
+    box-sizing: border-box;
+    height: 40px;
+    width: 100%;
+    font-size: 20px;
+  }
+  .el-checkbox+.el-checkbox {
+    margin-left: 9px !important;
+  }
