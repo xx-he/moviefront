@@ -1,4 +1,4 @@
-# movierecommend
+# moviefront
 基于Vue的大数据电影推荐系统前端页面，采用前后端分离架构
 
 ### 任务点
