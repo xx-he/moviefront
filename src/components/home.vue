@@ -1,6 +1,6 @@
 <template>
   <div>
-    这是首页
+    欢迎来到大数据电影推荐系统
   </div>
 </template>
 
