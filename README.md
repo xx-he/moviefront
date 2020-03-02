@@ -14,6 +14,19 @@
 - [ ] 首页
 - [ ] 部署方案
 
+### Git
+``` bash
+# 创建本地分支并切换
+git checkout -b dev
+# 提交代码
+git commit -m "本次提交说明"
+# 推送到远程仓库
+git push
+# 将本地分支推动到仓库
+git push origin dev
+```
+
+
 ### 开发部署
 
 > A Vue.js project
