@@ -1,17 +1,19 @@
 import Vuex from 'vuex';
 import Vue from 'vue';
 import * as types from './types';
-import axios from './../http';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    // 用户信息
     users: {},
+    // login_status表示登录状态
     log_status: null,
+    // 暂时未知
     title: '',
   },
-  actions:{
+  actions: {
   },
   mutations: {
     [types.SYNC]: (state) => {

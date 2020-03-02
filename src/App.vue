@@ -3,14 +3,13 @@
     <el-container>
       <el-header>
         <el-col :span="6" style="height:100%"></el-col>
-        <el-col :span="12" class="header">大数据电影推荐系统</el-col>
+        <el-col :span="12" class="header">花瓣电影推荐系统</el-col>
         <el-col :span="6" style="height:100%">
-          <el-col :span="6" style="height:100%"></el-col>
-          <el-col :span="6" style="height:100%"></el-col>
-          <el-col :span="6" style="height:100%"></el-col>
-<!--          <el-col :span="6" class="logout_container">-->
-<!--            <el-button type="info" @click="handleLogout" plain v-show="logStatus">登出</el-button>-->
-<!--          </el-col>-->
+          <!--  登录退出        -->
+          <el-col :span="6" class="logout_container">
+            <el-button type="info" @click="handleLogin" plain v-show="logStatus === null">登录</el-button>
+            <el-button type="info" @click="handleLogout" plain v-show="logStatus === '1'">退出</el-button>
+          </el-col>
         </el-col>
       </el-header>
       <el-container>
@@ -20,20 +19,27 @@
                      :router="isRouter">
               <el-menu-item index="/">
                 <font-awesome-icon icon="home" style="margin-left:3px;margin-right:10px"/>
-                <span slot="title">推荐</span>
+                <span slot="title">首页推荐</span>
               </el-menu-item>
-              <el-submenu index="1">
+              <el-submenu index="user">
                 <template slot="title">
                   <font-awesome-icon icon="users" style="margin-left:3px;margin-right:10px"/>
                   <span>用户</span>
                 </template>
                 <el-menu-item index="user_info">用户信息</el-menu-item>
-                <el-menu-item index="user_admin">权限管理</el-menu-item>
+                <el-menu-item index="user_edit">用户编辑</el-menu-item>
               </el-submenu>
               <el-menu-item index="classManage">
                 <i class="el-icon-tickets"></i>
-                <span slot="title">电影数据管理</span>
+                <span slot="title">评论管理</span>
               </el-menu-item>
+              <el-submenu index="person">
+                <template slot="title">
+                  <font-awesome-icon icon="server" style="margin-left:3px;margin-right:10px"/>
+                  <span>演员管理</span>
+                </template>
+                <el-menu-item index="personList"></el-menu-item>
+              </el-submenu>
             </el-menu>
           </el-col>
         </el-aside>
@@ -64,18 +70,25 @@ export default {
   data() {
     return {
       isRouter: true,
-      publicStore,
     };
   },
-  created(){
+  created() {
+    // this.$store.dispatch('loadCourseinfo');
   },
   methods: {
-    handleLogout() {
-      this.$store.commit(types.LOGOUT);
+    handleLogin() {
+      this.$store.commit(types.LOGIN);
       this.$router.push({
         path: '/login',
       });
+    },
+    handleLogout() {
+      this.$store.commit(types.LOGOUT);
+      this.$router.push({
+        path: '/',
+      });
     }
+    ,
   },
   computed: mapState({
     title: state => state.title,
@@ -129,8 +142,6 @@ export default {
     box-sizing: border-box;
   }
 
-  .el-main {
-  }
 
   .router_view {
     width: 100%;

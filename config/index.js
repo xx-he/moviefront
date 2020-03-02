@@ -11,15 +11,15 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/': {
-          target: 'http://localhost:10016',
+          target: 'http://localhost:10015',
           pathRewrite: {"^/" : ""},
       },
       '/test': {
-        target: 'http://localhost:4001',
+        target: 'http://localhost:10015',
         pathRewrite: {'^/test': ''},
       },
       '/api/admin': {
-        target: 'http://localhost/',
+        target: 'http://localhost:10015/',
         changeOrigin: true,
         cookieDomainRewrite: {
           "pqdong.com": "localhost",

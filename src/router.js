@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import store from './store/store';
 import login from './components/login';
 import index from './components/index';
+import * as types from './store/types';
 
 Vue.use(Router);
 
@@ -12,7 +13,7 @@ const routes = [
     name: 'index',
     component: index,
     meta: {
-      requireLogin: true,
+      requireLogin: false,
     },
   },
   {

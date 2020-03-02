@@ -4,9 +4,9 @@
 ### 任务点
 - [x] 开发环境搭建测试
 - [x] 初步架构方案
-- [ ] Vue学习，开源项目学习
+- [x] Vue学习，开源项目学习
 - [ ] 等待后端mock接口
-- [ ] 用户登录页面，退出
+- [x] 用户登录页面，退出
 - [ ] 用户信息详情页，修改页
 - [ ] 电影详情页
 - [ ] 评论页
@@ -67,15 +67,39 @@ npm test
 ### 工程结构
 
 ```
-├── README.md
-├── .gitignore
+.
+├── build
+│   ├── build.js
+│   ├── check-versions.js
+│   ├── utils.js
+│   ├── vue-loader.conf.js
+│   ├── webpack.dev.conf.js  // webpack配置文件
+├── config
+│   ├── dev.env.js           // 配置文件
+│   ├── index.js
+├── index.html               // vue加载页
 ├── package.json
-├── config                              // webpack配置文件
-└── src
-    ├── assets                          // 静态资源文件
-    ├── testData                        // 本地测试所用的数据
-    ├── store                   
-    └── components                      // 组件
-          ├── userAdminDialog           // user_admin的对话框组件
-          └── user_info                 // 普通用户信息
+├── package-lock.json
+├── README.md
+├── server.js
+├── src
+│   ├── App.vue
+│   ├── assets
+│   │   ├── css
+│   │   ├── ele-custom-theme
+│   │   ├── logo.png
+│   │   ├── main.css
+│   │   └── util
+│   ├── components
+│   │   ├── home.vue
+│   │   ├── index.vue         // 首页
+│   │   └── login.vue         // 登录页面
+│   ├── http.js
+│   ├── main.js
+│   ├── router.js             // 路由
+│   └── store                 // vuex store
+│       ├── store.js
+│       └── types.js          // 常量
+├── static
+└── yarn.lock
 ```
