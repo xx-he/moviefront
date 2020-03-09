@@ -96,7 +96,7 @@ npm test
 │   │   └── login.vue         // 登录页面
 │   ├── http.js
 │   ├── main.js
-│   ├── router.js             // 路由
+│   ├── index.js            // 路由
 │   └── store                 // vuex store
 │       ├── store.js
 │       └── types.js          // 常量

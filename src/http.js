@@ -1,13 +1,15 @@
 import axios from 'axios';
-import qs from 'qs';
 import store from './store/store';
 import * as types from './store/types';
-import router from './router';
+import index from './router';
 
-axios.defaults.timeout = 5000;
-axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-axios.defaults.transformRequest = [data => qs.stringify(data)];
-axios.defaults.withCredentials = true;
+// const qs = require('qs');
+
+// axios.defaults.timeout = 5000;
+// axios.defaults.headers.post['Content-Type'] = 'application/json';
+// axios.defaults.headers.crossDomain = true;
+// axios.defaults.transformRequest = [data => qs.stringify(data)];
+// axios.defaults.withCredentials = true;
 // http response 拦截器
 axios.interceptors.response.use(
   response => response,
@@ -17,9 +19,9 @@ axios.interceptors.response.use(
         case 401:
           // 401 清除登录并跳转到登录页面
           store.commit(types.LOGOUT);
-          router.replace({
+          index.replace({
             path: 'login',
-            query: { redirect: router.currentRoute.fullPath },
+            query: { redirect: index.currentRoute.fullPath },
           });
           break;
         default:

@@ -4,9 +4,11 @@ import 'vue2-animate/dist/vue2-animate.min.css';
 import Vue from 'vue';
 import ElementUI from 'element-ui';
 import App from './App';
-import router from './router';
+import router from './router/index';
 import axios from './http';
 import store from './store/store';
+// eslint-disable-next-line import/first
+import 'element-ui/lib/theme-chalk/index.css';
 import './assets/main.css';
 import './assets/ele-custom-theme/index.css';
 

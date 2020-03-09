@@ -5,9 +5,9 @@
 </template>
 
 <script>
-    export default {
-        name: "home.vue"
-    }
+export default {
+  name: 'home.vue',
+};
 </script>
 
 <style scoped>

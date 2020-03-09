@@ -8,8 +8,10 @@ export default new Vuex.Store({
   state: {
     // 用户信息
     users: {},
+    // 用户token
+    token: '',
     // login_status表示登录状态
-    log_status: null,
+    enter_status: null,
     // 暂时未知
     title: '',
   },
@@ -17,23 +19,26 @@ export default new Vuex.Store({
   },
   mutations: {
     [types.SYNC]: (state) => {
-      if (localStorage.log_status) {
-        state.log_status = localStorage.log_status;
+      if (localStorage.enter_status) {
+        state.enter_status = localStorage.enter_status;
       }
     },
     [types.LOGIN]: (state) => {
-      localStorage.log_status = 1;
-      state.log_status = localStorage.log_status;
+      localStorage.enter_status = 1;
+      state.enter_status = localStorage.enter_status;
     },
     [types.LOGOUT]: (state) => {
-      localStorage.removeItem('log_status');
-      state.log_status = null;
+      localStorage.removeItem('enter_status');
+      state.enter_status = null;
     },
     [types.TITLE]: (state, data) => {
       state.title = data;
     },
     [types.FETCH]: (state, data) => {
       state.users = data;
+    },
+    [types.TOKEN]: (state, data) => {
+      state.token = data;
     },
   },
 });

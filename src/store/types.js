@@ -8,3 +8,5 @@ export const SYNC = 'sync';
 
 export const FETCH = 'fetch';
 
+export const TOKEN = 'token';
+
