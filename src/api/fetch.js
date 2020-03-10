@@ -1,20 +1,29 @@
 import api from './index';
 import axios from '../http';
-import store from '../store/store';
 
 const headers = {
   'Content-Type': 'application/json',
-  token: store.state.token,
+  // 这里有一个很玄学的问题
+  token: localStorage.getItem('token'),
 };
 export default {
+  getPerson() {
+    return axios.get(api.getPerson(), { params: { size: 9 } }, { headers });
+  },
+  getMovie() {
+    return axios.get(api.getMovie(), { params: { size: 9 } }, { headers });
+  },
   userRegister(info) {
     return axios.post(api.userRegister(), JSON.stringify(info), { headers });
+  },
+  movieTags() {
+    return axios.get(api.getMovieTag(), { headers });
   },
   userLogin(info) {
     return axios.post(api.userLogin(), JSON.stringify(info), { headers });
   },
-  getUserInfo() {
-    return axios.get(api.getUserInfo(), { headers });
+  getUserInfo(info) {
+    return axios.get(api.getUserInfo(), { params: { token: info } }, { headers });
   },
   sendCode(phone) {
     return axios.get(api.sendCode(), { params: { phone } }, { headers });

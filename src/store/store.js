@@ -8,8 +8,6 @@ export default new Vuex.Store({
   state: {
     // 用户信息
     users: {},
-    // 用户token
-    token: '',
     // login_status表示登录状态
     enter_status: null,
     // 暂时未知
@@ -30,15 +28,13 @@ export default new Vuex.Store({
     [types.LOGOUT]: (state) => {
       localStorage.removeItem('enter_status');
       state.enter_status = null;
+      localStorage.removeItem('token');
     },
     [types.TITLE]: (state, data) => {
       state.title = data;
     },
     [types.FETCH]: (state, data) => {
       state.users = data;
-    },
-    [types.TOKEN]: (state, data) => {
-      state.token = data;
     },
   },
 });

@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <div class="registerForm">
-      <img src="../assets/logo_1.png" class="logo" @click="backIndex"/>
+    <div class="loginTableForm">
+      <img src="../assets/logo_more.png" class="logo" @click="backIndex"/>
       <el-form :model="loginInfo" status-icon :rules="rules2" ref="loginInfo" label-width="100px" class="loginForm">
         <el-form-item prop="username">
           <el-input type="text" v-model="loginInfo.username" auto-complete="off" class="loginInput"
@@ -62,7 +62,7 @@ export default {
   },
   methods: {
     addAnimation() {
-      const form = document.getElementsByClassName('registerForm')[0];
+      const form = document.getElementsByClassName('loginTableForm')[0];
       form.classList.add('animated');
       form.classList.add('bounceInDown');
     },
@@ -81,8 +81,8 @@ export default {
               if (res.status === 200) {
                 if (res.data.code === 0) {
                   this.$store.commit(types.LOGIN);
-                  this.$store.commit(types.TOKEN, res.data.data.token);
-                  this.$router.push({ name: 'userInfo', params: { refresh: 1 } });
+                  localStorage.setItem('token', res.data.data);
+                  this.$router.push({ name: 'index', params: { refresh: 1 } });
                 } else {
                   this.$message({
                     message: '用户名或密码错误',
@@ -138,7 +138,7 @@ export default {
     transform: matrix(1.05, 0, 0, 1.05, 3.07, 5.7)
   }
 
-  .registerForm {
+  .loginTableForm {
     background: #fff;
     border: 1px solid #ededed;
     width: 450px;

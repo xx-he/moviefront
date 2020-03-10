@@ -3,13 +3,22 @@ const host = 'http://localhost:10015';
 
 export default {
   userRegister() {
-    return `${host}/user`;
+    return `${host}/user/register`;
   },
   userLogin() {
     return `${host}/user/login`;
   },
   getUserInfo() {
-    return `${host}/user`;
+    return `${host}/user/userInfo`;
+  },
+  getMovie() {
+    return `${host}/movie`;
+  },
+  getPerson() {
+    return `${host}/person`;
+  },
+  getMovieTag() {
+    return `${host}/movie/tag`;
   },
   sendCode() {
     return `${host}/outside/code`;
