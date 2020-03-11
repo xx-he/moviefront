@@ -100,7 +100,7 @@
         this.isEdit = !this.isEdit;
       },
       toIndex() {
-        this.$router.push({ name: 'index', params: { refresh: 1 } });
+        this.$router.push({ name: 'index' });
       },
       // 提交订单信息
       submitInfo(formName) {

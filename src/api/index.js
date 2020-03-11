@@ -1,4 +1,4 @@
-const host = 'http://localhost:10015';
+const host = 'http://movie.pqdong.com';
 // const host = 'http://localhost:10000'
 
 export default {
@@ -21,7 +21,7 @@ export default {
     return `${host}/movie/tag`;
   },
   sendCode() {
-    return `${host}/outside/code`;
+    return `${host}/user/code`;
   },
   logout() {
     return `${host}/user/logout`;

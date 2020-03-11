@@ -49,7 +49,7 @@ export default {
     },
   },
   mounted() {
-    if (localStorage.getItem('token') !== '') {
+    if (localStorage.getItem('token') !== null) {
       this.isShow = false;
     }
   },

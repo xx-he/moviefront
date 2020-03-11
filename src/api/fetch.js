@@ -29,7 +29,8 @@ export default {
     return axios.get(api.sendCode(), { params: { phone } }, { headers });
   },
   logout() {
-    return axios.get(api.logout(), { headers });
+    headers.token = localStorage.getItem('token')
+    return axios.post(api.logout(), null, { headers });
   },
   putUserInfo(userInfo) {
     return axios.put(api.putUserInfo(), JSON.stringify(userInfo), { headers });
