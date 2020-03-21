@@ -58,7 +58,7 @@ export default {
       if (num === 1) {
         this.$router.push({ name: 'index' });
       } else if (num === 2) {
-        this.$router.push({ name: 'userInfo' });
+        this.$router.push({ name: 'userInfo', params: { refresh: 1 }});
       } else if (num === 3) {
         this.$router.push({ name: 'infoCenter' });
       } else if (num === 4) {

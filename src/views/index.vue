@@ -14,7 +14,12 @@
     <div class="cardContain">
       <div class="wrapper-card">
         <div class="card" v-for="(item, key) in movieList" :key="key">
-          <img :src="item.avatar" class="image" @click="getMovieDetail(item.id)">
+<!--          引入资源防止403-->
+          <meta name="referrer" content="no-referrer"/>
+          <img :src="item.cover" class="image" @click="getMovieDetail(item.id)">
+          <div>
+            <p style="white-space: pre-wrap;">{{item.name}}    </p>
+          </div>
         </div>
       </div>
     </div>
@@ -29,6 +34,7 @@
 <!--        @click="personDetail(item.id)-->
         <div class="newsItem" v-for="(item, key) in personList" :key="key">
                 <div class="picContain" ontouchstart="this.classList.toggle('hover');">
+                  <meta name="referrer" content="no-referrer"/>
                   <img :src=item.avatar height="75" width="75">
               </div>
           <div>
@@ -39,11 +45,12 @@
       </div>
     </div>
 
+    <div class="division"><h3>关于我们</h3>
+      <h3 style="color: #888;font-weight: 400">--- ABOUT ---</h3></div>
     <div class="aboutus">
       <div id="aboutusInfo">
-        <h2>关于我们</h2>
-        <p>基于大数据的电影推荐系统</p>
-        <p>为您推荐最好的电影，带给你最佳的观影体验！</p>
+        <p style="font-size: 200%">基于大数据的电影推荐系统</p>
+        <p style="font-size: 200%">为您推荐最好的电影，带给你最佳的观影体验！</p>
       </div>
     </div>
     <div class="division"><h3>联系我们</h3>
@@ -67,7 +74,6 @@ export default {
       crouselImg: [
         { img: 'https://ydschool-video.nosdn.127.net/1583850881001Snipaste_2020-03-10_22-35-21.png' },
         { img: 'https://ydschool-video.nosdn.127.net/1583851372811Snipaste_2020-03-10_22-43-36.png' },
-        { img: 'https://ydschool-video.nosdn.127.net/1583851398273Snipaste_2020-03-10_22-39-04.png' },
         { img: 'https://ydschool-video.nosdn.127.net/1583851439196Snipaste_2020-03-10_22-42-28.png' },
         { img: 'https://ydschool-video.nosdn.127.net/1583851475466Snipaste_2020-03-10_22-40-12.png' },
 
@@ -127,14 +133,16 @@ export default {
       fetch.getMovie()
         .then((res) => {
           if (res.status === 200) {
-            this.movieList = res.data.data.movieList;
+            if (res.data.code === 0) {
+              this.movieList = res.data.data.movieList;
+            }
           }
         });
     },
 
     getMovieDetail(id) {
       localStorage.setItem('movieId', id);
-      this.$router.push({ name: 'movieDetail' });
+      // this.$router.push({ name: 'movieDetail' });
     },
   },
 };
@@ -249,11 +257,11 @@ export default {
   .aboutus {
     width: 100%;
     height: 500px;
-    background: url("https://upload-images.jianshu.io/upload_images/9381131-fd2872c9d933b2de.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240") no-repeat;
+    background: url("https://ydschool-video.nosdn.127.net/158480509232652112_AaOXxSky.jpg") no-repeat;
     background-size: 100% 100%;
     filter: grayscale(70%);
     opacity: 0.7;
-    color: black;
+    color: white;
     font-weight: 600;
     padding-top: 60px;
   }
@@ -286,7 +294,7 @@ export default {
   .wrapper-card .card {
     color: #07111B;
     font-size: 16px;
-    width: 336px;
+    width: 230px;
     height: 243px;
     float: left;
     margin: 30px;

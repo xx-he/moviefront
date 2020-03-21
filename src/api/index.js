@@ -1,4 +1,4 @@
-const host = 'http://movie.pqdong.com';
+const host = 'http://movie.pqdong.com:10015';
 // const host = 'http://localhost:10000'
 
 export default {
@@ -12,10 +12,10 @@ export default {
     return `${host}/user/userInfo`;
   },
   getMovie() {
-    return `${host}/movie`;
+    return `${host}/movie/list`;
   },
   getPerson() {
-    return `${host}/person`;
+    return `${host}/person/list`;
   },
   getMovieTag() {
     return `${host}/movie/tag`;
@@ -28,7 +28,7 @@ export default {
   },
   // 提交用户信息
   putUserInfo() {
-    return `${host}/user/info`;
+    return `${host}/user/userInfo`;
   },
   // 修改用户手机号码
   changePhone() {

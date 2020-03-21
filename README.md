@@ -39,19 +39,15 @@ git push
 ## Build Setup
 
 ``` bash
-# install dependencies
+# 本地开发
 npm install
 
-# serve with hot reload at localhost:8080
 npm run dev
 
-# build for production with minification
+# 线上部署
 npm run build
 
-# build for production and view the bundle analyzer report
-npm run build --report
-
-# run unit tests
+# 单元测试
 npm run unit
 
 # run all tests

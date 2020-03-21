@@ -1,7 +1,4 @@
-FROM node:10
-
-# 将打包后的文件拷贝到容器中
-COPY . .
-RUN npm install
+FROM danjellz/http-server
+COPY ./dist  .
 EXPOSE  10016
-ENTRYPOINT ["npm", "run", "dev"]
+CMD http-server  -p 10016

@@ -1,6 +1,23 @@
 <template>
   <div>
     <div class="wrapper">
+      <el-card class="box-card">
+        <div>
+          <el-upload
+            class="avatar-uploader"
+            action="http://127.0.0.1:10015/user/avatar"
+            name="avatar"
+            :headers="head"
+            :data="{'userMd': this.list.userMd}"
+            :show-file-list="false"
+            :on-success="handleAvatarSuccess"
+            :before-upload="beforeAvatarUpload">
+            <img v-if="imageUrl"  class="avatar">
+            <img v-else class="img" :src="setDefault">
+          </el-upload>
+          <span class="username">{{list ? list.username : ''}}</span>
+        </div>
+      </el-card>
       <el-tabs type="border-card" tabPosition="left"
                style="width:1000px;height: 100vh;margin: 14px auto auto auto;position: sticky">
         <el-tab-pane>
@@ -26,17 +43,24 @@ export default {
         username: '',
         sex: '',
         phone: '',
-        userTags: '',
+        userTags: [],
         userMd: '',
+        userAvatar: '',
+        motto: '',
       },
       imageUrl: '',
-      head: {},
+      head: {
+        token: localStorage.getItem('token'),
+      },
       refresh: 0,
     };
   },
   computed: {
     setDefault() {
-      return this.list.avatar ? this.list.avatar : 'https://upload-images.jianshu.io/upload_images/9381131-a48cdb07b37dcff1.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240';
+      if (this.list.userAvatar != null) {
+        return this.list.userAvatar;
+      }
+      return 'http://oimagec6.ydstatic.com/image?id=-4541055657611236390&product=bisheng';
     },
   },
   mounted() {
@@ -56,11 +80,37 @@ export default {
       fetch
         .getUserInfo(localStorage.getItem('token'))
         .then((res) => {
-          this.list = res.data.data !== null ? res.data.data : this.list;
+          if (res.data.code === 0) {
+            this.list = res.data.data !== null ? res.data.data : this.list;
+            this.list.userTags = JSON.parse(this.list.userTags);
+          } else {
+            this.$message({
+              type: 'warning',
+              message: res.data.description,
+            });
+          }
         })
         .catch((err) => {
-          console.log(err);
+          this.$message({
+            type: 'error',
+            message: err,
+          });
         });
+    },
+    handleAvatarSuccess(res) {
+      this.imageUrl = res.data;
+    },
+    beforeAvatarUpload(file) {
+      const isJPG = file.type === 'image/jpeg';
+      const isLt2M = file.size / 1024 / 1024 < 2;
+
+      if (!isJPG) {
+        this.$message.error('上传头像图片只能是 JPG 格式!');
+      }
+      if (!isLt2M) {
+        this.$message.error('上传头像图片大小不能超过 2MB!');
+      }
+      return isJPG && isLt2M;
     },
   },
 };

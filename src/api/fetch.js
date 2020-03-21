@@ -11,7 +11,7 @@ export default {
     return axios.get(api.getPerson(), { params: { size: 9 } }, { headers });
   },
   getMovie() {
-    return axios.get(api.getMovie(), { params: { size: 9 } }, { headers });
+    return axios.get(api.getMovie(), { params: { size: 12 } }, { headers });
   },
   userRegister(info) {
     return axios.post(api.userRegister(), JSON.stringify(info), { headers });
@@ -33,7 +33,8 @@ export default {
     return axios.post(api.logout(), null, { headers });
   },
   putUserInfo(userInfo) {
-    return axios.put(api.putUserInfo(), JSON.stringify(userInfo), { headers });
+    headers.token = localStorage.getItem('token')
+    return axios.post(api.putUserInfo(), JSON.stringify(userInfo), { headers });
   },
   changePhone(phone) {
     return axios.put(api.changePhone(), JSON.stringify(phone), { headers });

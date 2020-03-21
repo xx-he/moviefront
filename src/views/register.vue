@@ -207,7 +207,7 @@ export default {
             .catch((e) => {
               this.$message({
                 message: '注册失败',
-                type: 'warning',
+                type: 'error',
               });
             });
         }
@@ -269,7 +269,6 @@ export default {
     content: '';
     position: absolute;
     filter: blur(1px);
-    background-image: url("https://upload-images.jianshu.io/upload_images/9381131-261e4e2e3fca50f5.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240");
     background-size: 100% 100%;
     top: 0;
     left: 0;
