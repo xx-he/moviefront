@@ -1,7 +1,6 @@
 <template>
   <div>
     <table v-if="!isEdit" class="container">
-      <th> 个人信息</th>
       <tr>
         <td>昵称：</td>
         <td>{{list.username}}</td>
@@ -33,15 +32,18 @@
         <td>ID：</td>
         <td>{{list.userMd}}</td>
       </tr>
-      <el-button class="edit" @click="changeEdit">编辑</el-button>
-      <el-button class="edit" @click="toIndex">返回</el-button>
+      <tr>
+        <td></td>
+      </tr>
     </table>
     <el-form :model="list" status-icon :rules="rules2" ref="list" label-width="100px" class="formWrap"
              v-if="isEdit">
-      <el-form-item label="昵称" prop="username">
+      <div >
+        <el-form-item label="昵称" prop="username" style="text-align: right">
         <el-input v-model="list.username" auto-complete="off"></el-input>
       </el-form-item>
-      <el-form-item label="标签" prop="userTags">
+      </div>
+      <el-form-item label="标签" prop="userTags" style="text-align: right">
         <div class="mutli">
           <!--          <template v-for="prop in tags">-->
           <dd v-for="op in tags" class="mutli">
@@ -49,20 +51,28 @@
           </dd>
         </div>
       </el-form-item>
-      <el-form-item label="个人宣言" prop="motto">
+      <span>
+        <el-form-item label="个人宣言" prop="motto" style="text-align: right">
         <el-input v-model="list.motto" auto-complete="off"></el-input>
       </el-form-item>
-      <el-form-item label="性别" prop="sex">
+      </span>
+      <span>
+        <el-form-item label="性别" prop="sex" style="text-align: right">
         <el-select v-model="list.sex" placeholder="请选择性别" style="width: 100%">
           <el-option label="男" value="男"></el-option>
           <el-option label="女" value="女"></el-option>
         </el-select>
       </el-form-item>
+      </span>
       <el-form-item>
         <el-button class='editor' @click="backToView">返回</el-button>
         <el-button @click="submitInfo('list')">提交</el-button>
       </el-form-item>
     </el-form>
+    <div>
+      <el-button v-if="!isEdit" class="edit" @click="changeEdit" >编辑</el-button>
+      <el-button v-if="!isEdit" class="edit" @click="toIndex" >返回</el-button>
+    </div>
   </div>
 </template>
 
@@ -83,7 +93,9 @@
   }
 
   .edit {
-    margin: 10px auto auto 40px;
+    /*position: inherit;*/
+    /*left: 300px;*/
+    /*margin: 10px auto auto 10px;*/
   }
 
   .editt {
@@ -132,6 +144,7 @@ export default {
       callback();
     };
     return {
+      refresh: 0,
       tags: [],
       userTags: [],
       isEdit: false,
@@ -144,7 +157,11 @@ export default {
   mounted() {
     this.getUserTags();
   },
-  watch: {},
+  watch: {
+    refresh() {
+      location.reload();
+    },
+  },
   methods: {
     getUserTags() {
       fetch
@@ -183,7 +200,9 @@ export default {
     submitInfo(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
+          console.log(this.userTags)
           this.list.userTags = JSON.stringify(this.userTags);
+          console.log(this.list)
           fetch
             .putUserInfo(this.list)
             .then((res) => {
@@ -192,6 +211,11 @@ export default {
                 this.$message({
                   message: '保存成功',
                   type: 'success',
+                });
+              } else {
+                this.$message({
+                  message: res.data.description,
+                  type: 'error',
                 });
               }
             })

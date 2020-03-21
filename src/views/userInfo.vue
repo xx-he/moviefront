@@ -5,7 +5,7 @@
         <div>
           <el-upload
             class="avatar-uploader"
-            action="http://127.0.0.1:10015/user/avatar"
+            action="http://movie.pqdong.com:10015/user/avatar"
             name="avatar"
             :headers="head"
             :data="{'userMd': this.list.userMd}"
