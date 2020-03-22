@@ -13,6 +13,9 @@ export default {
   getMovie() {
     return axios.get(api.getMovie(), { params: { size: 12 } }, { headers });
   },
+  getMovieInfo(id) {
+    return axios.get(api.getMovieInfo(), { params: { movieId: id } }, { headers });
+  },
   userRegister(info) {
     return axios.post(api.userRegister(), JSON.stringify(info), { headers });
   },
@@ -29,11 +32,11 @@ export default {
     return axios.get(api.sendCode(), { params: { phone } }, { headers });
   },
   logout() {
-    headers.token = localStorage.getItem('token')
+    headers.token = localStorage.getItem('token');
     return axios.post(api.logout(), null, { headers });
   },
   putUserInfo(userInfo) {
-    headers.token = localStorage.getItem('token')
+    headers.token = localStorage.getItem('token');
     return axios.post(api.putUserInfo(), JSON.stringify(userInfo), { headers });
   },
   changePhone(phone) {

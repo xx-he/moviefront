@@ -14,6 +14,8 @@ const login = resolve => require(['../views/login'], resolve);
 const register = resolve => require(['../views/register'], resolve);
 // eslint-disable-next-line global-require,import/no-dynamic-require
 const userInfo = resolve => require(['../views/userInfo.vue'], resolve);
+// eslint-disable-next-line global-require,import/no-dynamic-require
+const movieInfo = resolve => require(['../views/movieInfo.vue'], resolve);
 
 
 const router = new Router({
@@ -26,6 +28,17 @@ const router = new Router({
           path: '/',
           name: 'index',
           component: index,
+        },
+      ],
+    },
+    {
+      path: '/movieInfo',
+      component: CommonPage,
+      children: [
+        {
+          path: '/',
+          name: 'movieInfo',
+          component: movieInfo,
         },
       ],
     },

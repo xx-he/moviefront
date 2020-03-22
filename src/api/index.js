@@ -14,6 +14,9 @@ export default {
   getMovie() {
     return `${host}/movie/list`;
   },
+  getMovieInfo() {
+    return `${host}/movie/info`;
+  },
   getPerson() {
     return `${host}/person/list`;
   },

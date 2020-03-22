@@ -16,7 +16,7 @@
         <div class="card" v-for="(item, key) in movieList" :key="key">
 <!--          引入资源防止403-->
           <meta name="referrer" content="no-referrer"/>
-          <img :src="item.cover" class="image" @click="getMovieDetail(item.id)">
+          <img :src="item.cover" class="image" @click="getMovieDetail(item.movieId)">
           <div>
             <p style="white-space: pre-wrap;">{{item.name}}    </p>
           </div>
@@ -142,7 +142,7 @@ export default {
 
     getMovieDetail(id) {
       localStorage.setItem('movieId', id);
-      // this.$router.push({ name: 'movieDetail' });
+      this.$router.push({ name: 'movieInfo' });
     },
   },
 };

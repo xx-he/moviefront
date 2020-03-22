@@ -38,11 +38,9 @@
     </table>
     <el-form :model="list" status-icon :rules="rules2" ref="list" label-width="100px" class="formWrap"
              v-if="isEdit">
-      <div >
         <el-form-item label="昵称" prop="username" style="text-align: right">
         <el-input v-model="list.username" auto-complete="off"></el-input>
       </el-form-item>
-      </div>
       <el-form-item label="标签" prop="userTags" style="text-align: right">
         <div class="mutli">
           <!--          <template v-for="prop in tags">-->
@@ -200,9 +198,9 @@ export default {
     submitInfo(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          console.log(this.userTags)
+          console.log(this.userTags);
           this.list.userTags = JSON.stringify(this.userTags);
-          console.log(this.list)
+          console.log(this.list);
           fetch
             .putUserInfo(this.list)
             .then((res) => {

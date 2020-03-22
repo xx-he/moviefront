@@ -1,9 +1,32 @@
 # moviefront
 基于Vue的大数据电影推荐系统前端页面，采用前后端分离架构  
+后端代码  [https://github.com/pq-dong/movierecommend](https://github.com/pq-dong/movierecommend)  
 
 ### demo地址：[http://movie.pqdong.com/#/](http://movie.pqdong.com/#/)  
 由于首页资源比较多，且服务器带宽太小，所以首次访问时加载速度会很慢（大约在30s左右，可怕！），请多等一下；  
 待功能开发完毕后会优化此页面加载速度  
+
+### 开发部署
+
+> A Vue.js project
+
+## Build Setup
+
+``` bash
+# 本地开发，需要将域名 0.0.0.0换成127.0.0.1
+npm install
+
+npm run dev
+
+# 线上部署
+npm run build
+
+# 单元测试
+npm run unit
+
+# run all tests
+npm test
+```
 
 ### 任务点
 - [x] 开发环境搭建测试
@@ -29,29 +52,6 @@ git add .
 git commit -m "本次提交说明"
 # 推送到远程仓库
 git push
-```
-
-
-### 开发部署
-
-> A Vue.js project
-
-## Build Setup
-
-``` bash
-# 本地开发
-npm install
-
-npm run dev
-
-# 线上部署
-npm run build
-
-# 单元测试
-npm run unit
-
-# run all tests
-npm test
 ```
 
 
