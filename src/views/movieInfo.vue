@@ -13,7 +13,8 @@
           <p>主演：{{movie.actors}}</p>
           <p>评分：{{movie.score}}<span>|</span>投票数：{{movie.votes}}</p>
         </div>
-        <el-button class="moviebtn" @click="viewMovie(movie.officialSite)">观看电影</el-button>
+        <el-button type="primary" v-if="movie.officialSite" class="moviebtn" @click="viewMovie(movie.officialSite)" plain>观看电影</el-button>
+        <el-button v-else class="moviebtn">无法观看，暂无资源</el-button>
       </el-card>
       <el-card class="moviecard">
         <div class="movieintroduce">电影简介</div>
@@ -22,6 +23,14 @@
           <p>上映时间：{{movie.releaseDate}}<span>|</span>地区：{{movie.regions}}<span>|</span>语言：{{movie.languages}}</p>
           <p>片长：{{movie.mins}} 分钟</p>
         </div>
+      <div>
+        <span v-show="!hasSet" v-for="n in 10">
+              <el-button class="scorec" @click="setScore(n)">{{n}}</el-button>
+              <span>&ensp;</span>
+            </span>
+        <span v-show="hasSet">你已经为此电影打过分！！！</span>
+        <el-button type="primary" v-if="true" class="combtn" plain>点击右侧为电影打分</el-button>
+      </div>
       </el-card>
       <el-card class="moviecard">
         <div class="movieintroduce">电影内容</div>
@@ -41,6 +50,7 @@ export default {
     return {
       movie: {},
       isShow: false,
+      hasSet: false,
     };
   },
   mounted() {
@@ -52,6 +62,23 @@ export default {
     },
   },
   methods: {
+    setScore(score) {
+      this.hasSet = true;
+      this.movie.score = (score + this.movie.score) / 2;
+      fetch
+        .putMovie({
+          movie: this.movie,
+        })
+        .then((res) => {
+          if (res.code === 0) {
+            // this.getMovieDetail();
+
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
     getMovieDetail() {
       const movieId = localStorage.getItem('movieId');
       fetch
@@ -146,5 +173,14 @@ export default {
   .moviebtn {
     float: right;
     margin-bottom: 20px;
+  }
+
+  .combtn {
+    float: left;
+    margin-bottom: 20px;
+  }
+
+  .scorec {
+    margin: 0px auto auto 0px;
   }
 </style>

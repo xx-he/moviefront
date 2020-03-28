@@ -16,7 +16,12 @@ const register = resolve => require(['../views/register'], resolve);
 const userInfo = resolve => require(['../views/userInfo.vue'], resolve);
 // eslint-disable-next-line global-require,import/no-dynamic-require
 const movieInfo = resolve => require(['../views/movieInfo.vue'], resolve);
-
+// eslint-disable-next-line global-require,import/no-dynamic-require
+const personInfo = resolve => require(['../views/personInfo.vue'], resolve);
+// eslint-disable-next-line global-require,import/no-dynamic-require
+const movieList = resolve => require(['../views/movieList.vue'], resolve);
+// eslint-disable-next-line global-require,import/no-dynamic-require
+const personList = resolve => require(['../views/personList.vue'], resolve);
 
 const router = new Router({
   routes: [
@@ -39,6 +44,39 @@ const router = new Router({
           path: '/',
           name: 'movieInfo',
           component: movieInfo,
+        },
+      ],
+    },
+    {
+      path: '/movieList',
+      component: CommonPage,
+      children: [
+        {
+          path: '/',
+          name: 'movieList',
+          component: movieList,
+        },
+      ],
+    },
+    {
+      path: '/personList',
+      component: CommonPage,
+      children: [
+        {
+          path: '/',
+          name: 'personList',
+          component: personList,
+        },
+      ],
+    },
+    {
+      path: '/personInfo',
+      component: CommonPage,
+      children: [
+        {
+          path: '/',
+          name: 'personInfo',
+          component: personInfo,
         },
       ],
     },

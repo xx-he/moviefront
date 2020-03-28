@@ -14,11 +14,26 @@ export default {
   getMovie() {
     return `${host}/movie/list`;
   },
+  getMovieHigh() {
+    return `${host}/movie/high`;
+  },
+  getMovieByTag() {
+    return `${host}/movie/listByTag`;
+  },
   getMovieInfo() {
     return `${host}/movie/info`;
   },
+  putMovie() {
+    return `${host}/movie/update`;
+  },
   getPerson() {
     return `${host}/person/list`;
+  },
+  getPersonInfo() {
+    return `${host}/person/info`;
+  },
+  getPersonMovie() {
+    return `${host}/movie/person/attend`;
   },
   getMovieTag() {
     return `${host}/movie/tag`;
@@ -45,7 +60,6 @@ export default {
   changeEmail() {
     return `${host}/user/email`;
   },
-  // 获取站内信
   getMessage() {
     return `${host}/message/user/get`;
   },

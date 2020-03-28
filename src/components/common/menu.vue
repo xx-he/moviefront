@@ -9,10 +9,14 @@
                                                                               class="el-input__icon el-icon-search"></i></el-input></span>
       </div>
       <div>
-<!--        <span @click="redirect(3)" class="tab" v-show="!isShow">-->
-<!--          <i class="el-icon-message" style="margin-right:0.3rem" @click="redirect(3)">-->
-<!--            </i>消息中心<span class="icon" v-show="count > 0" ref="icon">{{ count }}</span>-->
-<!--          </span>-->
+        <span @click="redirect(3)" class="tab">
+          <i style="margin-right:0.3rem" @click="redirect(3)">
+            </i>更多演员...
+          </span>
+        <span @click="redirect(4)" class="tab">
+          <i style="margin-right:0.3rem" @click="redirect(3)">
+            </i>更多电影...
+          </span>
         <span v-if="isShow">
           <span class="tab" @click="redirect(4)">登录</span>
           <span class="tab"  @click="toregister">注册</span>
@@ -58,11 +62,11 @@ export default {
       if (num === 1) {
         this.$router.push({ name: 'index' });
       } else if (num === 2) {
-        this.$router.push({ name: 'userInfo'});
+        this.$router.push({ name: 'userInfo' });
       } else if (num === 3) {
-        this.$router.push({ name: 'infoCenter' });
+        this.$router.push({ name: 'personList' });
       } else if (num === 4) {
-        this.$router.push({ name: 'login' });
+        this.$router.push({ name: 'movieList' });
       }
     },
     toregister() {
@@ -72,7 +76,7 @@ export default {
       if (value !== null) {
         localStorage.setItem('content', value);
       }
-      // this.$router.push({ name: 'search', params: { count: 1 } });
+      this.$router.push({ name: 'movieList' });
     },
     logout() {
       fetch

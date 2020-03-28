@@ -1,42 +1,18 @@
 <template>
+  <!--演员资源-->
   <div>
-    <div class="indexContain">
-      <div class="cardBox">
-        <el-carousel trigger="click" height="400px" style="position: sticky;">
-          <el-carousel-item v-for="(item, key) in crouselImg" :key="key">
-            <img :src="item.img" class="boxImg">
-          </el-carousel-item>
-        </el-carousel>
-      </div>
-    </div>
-    <div class="division"><h3>电影资源</h3>
-      <h3 style="color: #888;font-weight: 400">--- HOTMOVIES ---</h3></div>
-    <div class="cardContain">
-      <div class="wrapper-card">
-        <div class="card" v-for="(item, key) in movieList" :key="key">
-<!--          引入资源防止403-->
-          <meta name="referrer" content="no-referrer"/>
-          <img :src="item.cover" class="image" @click="getMovieDetail(item.movieId)">
-          <div>
-            <p style="white-space: pre-wrap;">{{item.name}}    </p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!--演员资源-->
     <div class="division">
       <h3>演员资源</h3>
       <h3 style="color: #888;font-weight: 400">--- PERSONS ---</h3>
     </div>
     <div class="newsContain">
       <div class="temp">
-<!--        @click="personDetail(item.id)-->
+        <!--        @click="personDetail(item.id)-->
         <div class="newsItem" v-for="(item, key) in personList" :key="key" @click="getPersonDetail(item.id, item.name)">
-                <div class="picContain" ontouchstart="this.classList.toggle('hover');">
-                  <meta name="referrer" content="no-referrer"/>
-                  <img :src=item.avatar height="75" width="75">
-              </div>
+          <div class="picContain" ontouchstart="this.classList.toggle('hover');">
+            <meta name="referrer" content="no-referrer"/>
+            <img :src=item.avatar height="75" width="75">
+          </div>
           <div>
             <p style="white-space: pre-wrap;">姓名：{{item.name}}          性别：{{item.sex}}          地点：{{item.birthPlace}}       别名：{{item.nameZn}}</p>
             <p style="margin-top:25px">职业： {{item.profession}}</p>
@@ -44,106 +20,60 @@
         </div>
       </div>
     </div>
-
-    <div class="division"><h3>关于我们</h3>
-      <h3 style="color: #888;font-weight: 400">--- ABOUT ---</h3></div>
-    <div class="aboutus">
-      <div id="aboutusInfo">
-        <p style="font-size: 200%">基于大数据的电影推荐系统</p>
-        <p style="font-size: 200%">为您推荐最好的电影，带给你最佳的观影体验！</p>
-      </div>
-    </div>
-    <div class="division"><h3>联系我们</h3>
-      <h3 style="color: #888;font-weight: 400">--- CONTACT ---</h3></div>
-    <div class="footer">
-      <a href="https://github.com/pq-dong"><img src="../assets/github.png"><span>https://github.com/pq-dong</span></a>
-      <a href="https://github.com/erxuesun"><img src="../assets/github.png"><span>https://github.com/erxuesun</span></a>
+    <div>
+      <el-button class="editt" @click="prePage()">上一页</el-button>
+      <el-button type="primary" class="editt">{{this.count}}</el-button>
+      <el-button class="editt" >{{this.count+1}}</el-button>
+      <el-button class="editt" >{{this.count+2}}</el-button>
+      <el-button class="editt" @click="nextPage()">下一页</el-button>
     </div>
   </div>
 </template>
 
 <script>
 import fetch from '../api/fetch';
-// eslint-disable-next-line import/extensions,import/no-unresolved
-import store from '../store/store';
-// eslint-disable-next-line import/extensions,import/no-unresolved
 
 export default {
   data() {
     return {
-      crouselImg: [
-        { img: 'https://ydschool-video.nosdn.127.net/1583850881001Snipaste_2020-03-10_22-35-21.png' },
-        { img: 'https://ydschool-video.nosdn.127.net/1583851372811Snipaste_2020-03-10_22-43-36.png' },
-        { img: 'https://ydschool-video.nosdn.127.net/1583851439196Snipaste_2020-03-10_22-42-28.png' },
-        { img: 'https://ydschool-video.nosdn.127.net/1583851475466Snipaste_2020-03-10_22-40-12.png' },
-
-      ],
-      activeIndex2: '1',
-      movieList: [],
       personList: [],
-      isLogin: !!store.state.token,
+      count: 1,
       isShow: false,
     };
   },
-
   mounted() {
-    window.addEventListener('scroll', this.handler);
-    this.getMovie();
     this.getPerson();
   },
+  computed: {
+    isLogin() {
+      return !!localStorage.getItem('token');
+    },
+  },
   methods: {
-    handler() {
-      const info = document.getElementById('aboutusInfo') || null;
-      const card = document.getElementsByClassName('temp')[0] || null;
-      if (info === null || card === null) {
-
-      } else if (document.documentElement.scrollTop > 1000) {
-        card.classList.add('animated');
-        card.classList.add('bounceInLeft');
-        info.classList.add('animated');
-        info.classList.add('bounceInLeft');
-      } else {
-        info.classList.remove('animated');
-        info.classList.remove('bounceInLeft');
-        card.classList.remove('animated');
-        card.classList.remove('bounceInLeft');
+    prePage() {
+      if (this.count > 1) {
+        this.count = this.count - 1;
       }
+      this.getPerson();
     },
-
-    getPersonDetail(id, name) {
-      localStorage.setItem('personId', id);
-      localStorage.setItem('personName', name);
-      this.$router.push({ name: 'personInfo' });
+    nextPage() {
+      this.count = this.count + 1;
+      this.getPerson();
     },
-
     getPerson() {
-      fetch.getPerson()
+      fetch.getPerson(this.count)
         .then((res) => {
           if (res.status === 200) {
             if (res.data.code === 0) {
               this.personList = res.data.data.personList;
             }
           }
-        })
-        .catch((e) => {
-          console.log(e);
         });
     },
-
-    getMovie() {
-      fetch.getMovieHigh()
-        .then((res) => {
-          if (res.status === 200) {
-            if (res.data.code === 0) {
-              this.movieList = res.data.data.movieList;
-            }
-          }
-        });
-    },
-
-    getMovieDetail(id) {
-      localStorage.setItem('movieId', id);
-      this.$router.push({ name: 'movieInfo' });
+    getPersonDetail(id, name) {
+      localStorage.setItem('personId', id);
+      localStorage.setItem('personName', name);
+      this.$router.push({ name: 'personInfo' });
     },
   },
 };
@@ -324,7 +254,7 @@ export default {
 
   .division {
     width: 100%;
-    margin: 30px auto;
+    margin: 10px auto;
     text-align: center;
     padding-left: 10px;
     color: #5a5a5a;
@@ -367,6 +297,10 @@ export default {
   .progress2 {
     width: 182px;
     border: 0;
+  }
+
+  .editt {
+    margin: 0px auto auto 0px;
   }
 
 </style>

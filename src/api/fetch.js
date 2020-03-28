@@ -7,14 +7,29 @@ const headers = {
   token: localStorage.getItem('token'),
 };
 export default {
-  getPerson() {
-    return axios.get(api.getPerson(), { params: { size: 9 } }, { headers });
+  getPerson(num) {
+    return axios.get(api.getPerson(), { params: { page: num, size: 9 } }, { headers });
   },
   getMovie() {
     return axios.get(api.getMovie(), { params: { size: 12 } }, { headers });
   },
+  getMovieHigh() {
+    return axios.get(api.getMovieHigh(), { headers });
+  },
+  getMovieList(info) {
+    return axios.post(api.getMovieByTag(), JSON.stringify(info), { headers });
+  },
   getMovieInfo(id) {
     return axios.get(api.getMovieInfo(), { params: { movieId: id } }, { headers });
+  },
+  putMovie(movie) {
+    return axios.post(api.putMovie(), JSON.stringify(movie), { headers });
+  },
+  getPersonInfo(id) {
+    return axios.get(api.getPersonInfo(), { params: { personId: id } }, { headers });
+  },
+  getPersonMovie(name) {
+    return axios.get(api.getPersonMovie(), { params: { personName: name } }, { headers });
   },
   userRegister(info) {
     return axios.post(api.userRegister(), JSON.stringify(info), { headers });
