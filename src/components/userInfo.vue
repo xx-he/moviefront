@@ -38,7 +38,7 @@
     </table>
     <el-form :model="list" status-icon :rules="rules2" ref="list" label-width="100px" class="formWrap"
              v-if="isEdit">
-        <el-form-item label="昵称" prop="username" style="text-align: right">
+      <el-form-item label="昵称" prop="username" style="text-align: right">
         <el-input v-model="list.username" auto-complete="off"></el-input>
       </el-form-item>
       <el-form-item label="标签" prop="userTags" style="text-align: right">

@@ -22,6 +22,14 @@ export default {
   getMovieInfo(id) {
     return axios.get(api.getMovieInfo(), { params: { movieId: id } }, { headers });
   },
+  getCommentList(info) {
+    headers.token = localStorage.getItem('token');
+    return axios.post(api.getCommentInfo(), JSON.stringify(info), { headers });
+  },
+  submitComment(info) {
+    headers.token = localStorage.getItem('token');
+    return axios.post(api.submitComment(), JSON.stringify(info), { headers });
+  },
   putMovie(movie) {
     return axios.post(api.putMovie(), JSON.stringify(movie), { headers });
   },
@@ -59,9 +67,6 @@ export default {
   },
   changePass(password) {
     return axios.put(api.changePass(), JSON.stringify(password), { headers });
-  },
-  changeEmail(email) {
-    return axios.put(api.changeEmail(), JSON.stringify(email), { headers });
   },
   getMessage() {
     return axios.get(api.getMessage(), { headers });

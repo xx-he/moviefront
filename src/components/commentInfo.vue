@@ -1,54 +1,15 @@
 <template>
   <div>
-    <el-card v-if="isShow" class="moviecard">
+    <el-card v-if="!isShow" class="moviecard">
       <img src="http://www.pqdong.com/wp-content/uploads/2020/03/tip-img.png">
-      <p>啊哦，电影已经下线了</p>
+      <p>啊哦，你还没有留下过评论！</p>
     </el-card>
-    <div v-if="!isShow">
-      <el-card class="moviecard" style="height: 200px;">
-        <img :src="movie.cover" class="avatar">
-        <div class="introduce">
-          <p class="title">{{movie.name}}</p>
-          <p>标签：{{movie.tags}}</p>
-          <p>主演：{{movie.actors}}</p>
-          <p>评分：{{movie.score}}<span>|</span>投票数：{{movie.votes}}</p>
-        </div>
-        <el-button type="primary" v-if="movie.officialSite" class="moviebtn" @click="viewMovie(movie.officialSite)" plain>观看电影</el-button>
-        <el-button v-else class="moviebtn">无法观看，暂无资源</el-button>
-      </el-card>
-      <el-card class="moviecard">
-        <div class="movieintroduce">电影简介</div>
-        <div class="movieintroducet">
-          <p>导演：{{movie.directors}}</p>
-          <p>上映时间：{{movie.releaseDate}}<span>|</span>地区：{{movie.regions}}<span>|</span>语言：{{movie.languages}}</p>
-          <p>片长：{{movie.mins}} 分钟</p>
-        </div>
-      <div>
-        <span v-show="!hasSet" v-for="n in 10">
-              <el-button class="scorec" @click="setScore(n)">{{n}}</el-button>
-              <span>&ensp;</span>
-            </span>
-        <span v-show="hasSet">你已经为此电影打过分！！！</span>
-        <el-button type="primary" v-if="true" class="combtn" plain>点击右侧为电影打分</el-button>
-      </div>
-      </el-card>
-      <el-card class="moviecard">
-        <div class="movieintroduce">电影内容</div>
-        <div class="moviecontent">
-          <p>{{movie.storyline}}</p>
-        </div>
-      </el-card>
+    <div v-if="isShow">
       <el-card class="moviecard">
         <div class="movieintroduce">电影评论</div>
         <div class="newsContain">
           <div class="temp">
             <!--        @click="personDetail(item.id)-->
-            <el-input placeholder="登录后才可以评论哟~"  v-model="commentInput" maxlength="50" v-show="!isLogin" disabled type="textarea" autosize style="margin-top: 20px">
-            </el-input>
-            <el-input placeholder="请输入内容"  v-model="commentInput" maxlength="50" v-show="isLogin" type="textarea" autosize style="margin-top: 20px">
-            </el-input>
-            <el-button @click="postComment" class="combtn2" plain size="small">评论</el-button>
-            <el-button @click="clearComment" class="combtn2" plain size="small">清除</el-button>
             <div class="newsItem" v-for="(item, key) in comment" :key="key">
               <div class="picContain" ontouchstart="this.classList.toggle('hover');">
                 <meta name="referrer" content="no-referrer"/>
@@ -77,41 +38,20 @@
 import fetch from '../api/fetch';
 
 export default {
+  props: [],
   data() {
     return {
-      movie: {},
       comment: {},
       isShow: false,
-      isLogin: false,
-      hasSet: false,
-      commentInput: '',
       count: 1,
     };
   },
   mounted() {
-    this.getMovieDetail();
     this.getCommentDetail();
   },
   computed: {
   },
   methods: {
-    setScore(score) {
-      this.hasSet = true;
-      this.movie.score = (score + this.movie.score) / 2;
-      fetch
-        .putMovie({
-          movie: this.movie,
-        })
-        .then((res) => {
-          if (res.code === 0) {
-            // this.getMovieDetail();
-
-          }
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    },
     prePage() {
       if (this.count > 1) {
         this.count = this.count - 1;
@@ -122,87 +62,19 @@ export default {
       this.count = this.count + 1;
       this.getCommentDetail();
     },
-    getMovieDetail() {
-      const movieId = localStorage.getItem('movieId');
-      fetch
-        .getMovieInfo(movieId)
-        .then((res) => {
-          if (res.status === 200) {
-            if (res.data.data === null) {
-              this.isShow = true;
-            }
-            this.movie = res.data.data;
-          }
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    },
     getCommentDetail() {
-      if (localStorage.getItem('token') !== null) {
-        this.isLogin = true;
-      }
-      const movieId = localStorage.getItem('movieId');
+      const user = JSON.parse(localStorage.getItem('user'));
       fetch
         .getCommentList({
           page: this.count,
           size: 12,
-          movieId,
-          userId: '',
+          userMd: user.userMd,
           content: '',
         })
         .then((res) => {
           if (res.status === 200) {
             this.comment = res.data.data.commentList;
-          }
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    },
-    clearComment() {
-      this.commentInput = '';
-    },
-    postComment() {
-      const submitComment = {};
-      if (this.commentInput === '') {
-        this.$message({
-          message: '请输入评论...',
-          type: 'warning',
-        });
-        return;
-      }
-      submitComment.movieId = localStorage.getItem('movieId');
-      const user = JSON.parse(localStorage.getItem('user'));
-      submitComment.commentId = Date.parse(new Date());
-      submitComment.userName = user.username;
-      submitComment.userMd = user.userMd;
-      submitComment.userAvatar = user.userAvatar;
-      submitComment.movieName = this.movie.name;
-      submitComment.votes = 0;
-      submitComment.content = this.commentInput;
-      submitComment.commentTime = Date.parse(new Date());
-      fetch
-        .submitComment(submitComment)
-        .then((res) => {
-          if (res.data.code === 0) {
-            this.commentInput = '';
-            this.comment = res.data.data.commentList;
-            this.$message({
-              message: '提交成功！',
-              type: 'success',
-            });
-            this.getCommentDetail();
-          } else if (res.data.code === 1) {
-            this.$message({
-              message: '您的评论提交次数过快，请稍后重试！',
-              type: 'warning',
-            });
-          } else if (res.data.code === 1001) {
-            this.$message({
-              message: '请先登录',
-              type: 'warning',
-            });
+            this.isShow = true;
           }
         })
         .catch((e) => {

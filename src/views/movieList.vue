@@ -71,6 +71,7 @@ export default {
       this.getMovie();
     },
     getContent() {
+      // content为从首页电影搜索栏带过来的搜索条件
       const c = localStorage.getItem('content');
       if (c !== null) {
         localStorage.removeItem('content');

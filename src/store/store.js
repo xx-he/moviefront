@@ -29,6 +29,7 @@ export default new Vuex.Store({
       localStorage.removeItem('enter_status');
       state.enter_status = null;
       localStorage.removeItem('token');
+      localStorage.removeItem('user');
     },
     [types.TITLE]: (state, data) => {
       state.title = data;

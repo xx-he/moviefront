@@ -23,6 +23,12 @@ export default {
   getMovieInfo() {
     return `${host}/movie/info`;
   },
+  getCommentInfo() {
+    return `${host}/comment/list`;
+  },
+  submitComment() {
+    return `${host}/comment/submit`;
+  },
   putMovie() {
     return `${host}/movie/update`;
   },

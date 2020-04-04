@@ -24,6 +24,10 @@
           <span slot="label">个人信息<i class="el-icon-arrow-right"></i></span>
           <user :list="list" :imageUrl="imageUrl" class="user"></user>
         </el-tab-pane>
+        <el-tab-pane>
+          <span slot="label">我的评论<i class="el-icon-arrow-right"></i></span>
+          <comment></comment>
+        </el-tab-pane>
       </el-tabs>
     </div>
   </div>
@@ -33,6 +37,7 @@
 
 import fetch from '../api/fetch';
 import Info from '../components/userInfo';
+import CommentInfo from '../components/commentInfo';
 
 export default {
   data() {
@@ -74,6 +79,7 @@ export default {
   },
   components: {
     user: Info,
+    comment: CommentInfo,
   },
   methods: {
     getUserInfo() {
@@ -99,6 +105,9 @@ export default {
     },
     handleAvatarSuccess(res) {
       this.imageUrl = res.data;
+    },
+    getComment() {
+      this.$router.push({ name: 'commentInfo' });
     },
     beforeAvatarUpload(file) {
       const isJPG = file.type === 'image/jpeg';

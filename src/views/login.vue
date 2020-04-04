@@ -81,7 +81,8 @@ export default {
               if (res.status === 200) {
                 if (res.data.code === 0) {
                   this.$store.commit(types.LOGIN);
-                  localStorage.setItem('token', res.data.data);
+                  localStorage.setItem('user', JSON.stringify(res.data.data.user));
+                  localStorage.setItem('token', res.data.data.token);
                   this.$router.push({ name: 'index', params: { refresh: 1 } });
                 } else {
                   this.$message({
