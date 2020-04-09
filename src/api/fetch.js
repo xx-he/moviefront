@@ -13,6 +13,10 @@ export default {
   getMovie() {
     return axios.get(api.getMovie(), { params: { size: 12 } }, { headers });
   },
+  getRecommend() {
+    const info = localStorage.getItem('user');
+    return axios.post(api.getRecommend(), info, { headers });
+  },
   getMovieHigh() {
     return axios.get(api.getMovieHigh(), { headers });
   },
@@ -30,8 +34,9 @@ export default {
     headers.token = localStorage.getItem('token');
     return axios.post(api.submitComment(), JSON.stringify(info), { headers });
   },
-  putMovie(movie) {
-    return axios.post(api.putMovie(), JSON.stringify(movie), { headers });
+  putMovie(info) {
+    headers.token = localStorage.getItem('token');
+    return axios.post(api.putMovie(), JSON.stringify(info), { headers });
   },
   getPersonInfo(id) {
     return axios.get(api.getPersonInfo(), { params: { personId: id } }, { headers });

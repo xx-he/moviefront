@@ -14,6 +14,9 @@ export default {
   getMovie() {
     return `${host}/movie/list`;
   },
+  getRecommend() {
+    return `${host}/movie/recommend`;
+  },
   getMovieHigh() {
     return `${host}/movie/high`;
   },

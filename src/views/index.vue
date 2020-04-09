@@ -9,6 +9,20 @@
         </el-carousel>
       </div>
     </div>
+    <div v-show="!isLogin" class="division"><h3>为您推荐</h3>
+      <h3 style="color: #888;font-weight: 400">--- RECOMMENDMOVIES ---</h3></div>
+    <div v-show="!isLogin" class="cardContainx">
+      <div class="wrapper-cardx">
+        <div class="card" v-for="(item, key) in recommendList" :key="key">
+          <!--          引入资源防止403-->
+          <meta name="referrer" content="no-referrer"/>
+          <img :src="item.cover" class="image" @click="getMovieDetail(item.movieId)">
+          <div>
+            <p style="white-space: pre-wrap;">{{item.name}}    </p>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="division"><h3>电影资源</h3>
       <h3 style="color: #888;font-weight: 400">--- HOTMOVIES ---</h3></div>
     <div class="cardContain">
@@ -81,6 +95,10 @@ export default {
       activeIndex2: '1',
       movieList: [],
       personList: [],
+      recommendList: [{ movieId: 1306004, name: '重返中世纪', cover: 'https://img1.doubanio.com/view/photo/s_ratio_poster/public/p1878110577.jpg' },
+        { movieId: 1307266, name: '一声惊雷', cover: 'https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2178025056.jpg' },
+        { movieId: 1308835, name: '诸神混乱之女神陷阱', cover: 'https://img3.doubanio.com/view/photo/s_ratio_poster/public/p1775859403.jpg' },
+        { movieId: 1309166, name: '零号嫌疑犯', cover: 'https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2529453201.jpg' }],
       isLogin: !!store.state.token,
       isShow: false,
     };
@@ -90,6 +108,7 @@ export default {
     window.addEventListener('scroll', this.handler);
     this.getMovie();
     this.getPerson();
+    this.getRecommend();
   },
   methods: {
     handler() {
@@ -141,6 +160,17 @@ export default {
         });
     },
 
+    getRecommend() {
+      fetch.getRecommend()
+        .then((res) => {
+          if (res.status === 200) {
+            if (res.data.code === 0) {
+              this.recommendList = res.data.data;
+            }
+          }
+        });
+    },
+
     getMovieDetail(id) {
       localStorage.setItem('movieId', id);
       this.$router.push({ name: 'movieInfo' });
@@ -179,6 +209,12 @@ export default {
   .cardContain {
     width: 100%;
     height: 100%;
+    background: #fff;
+  }
+
+  .cardContainx {
+    width: 100%;
+    height: 30%;
     background: #fff;
   }
 
@@ -290,6 +326,37 @@ export default {
     height: 1000px;
     margin: 30px auto auto auto;
     padding-top: 30px;
+  }
+
+  .wrapper-cardx {
+    width: 1200px;
+    height: 400px;
+    margin: 30px auto auto auto;
+    padding-top: 30px;
+  }
+
+  .wrapper-cardx .card {
+    color: #07111B;
+    font-size: 16px;
+    width: 230px;
+    height: 243px;
+    float: left;
+    margin: 30px;
+    border-radius: 6px;
+  }
+
+  .wrapper-cardx .card:hover {
+    transform: translateY(-5px);
+    transition: 3ms;
+    box-shadow: 5px 5px 10px #888;
+  }
+
+  .wrapper-cardx .image {
+    border-radius: 6px 6px 0 0;
+    width: 100%;
+    height: 100%;
+    margin-bottom: 20px;
+    border-radius: 6px;
   }
 
   .wrapper-card .card {

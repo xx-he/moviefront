@@ -97,15 +97,23 @@ export default {
   methods: {
     setScore(score) {
       this.hasSet = true;
+      const user = JSON.parse(localStorage.getItem('user'));
       this.movie.score = (score + this.movie.score) / 2;
       fetch
         .putMovie({
-          movie: this.movie,
+          movieId: this.movie.movieId,
+          userId: user.id,
+          rating: this.movie.score,
         })
         .then((res) => {
           if (res.code === 0) {
             // this.getMovieDetail();
 
+          } else if (res.code === 500) {
+            this.$message({
+              message: '请先登录',
+              type: 'warning',
+            });
           }
         })
         .catch((e) => {
